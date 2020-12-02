@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shuffule</title>
+
+    <style>
+        .subject-list-move{
+            /* itemリストが動いたら着火 */
+            transition:transform 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-on でmethods呼び出し -->
+        <button v-on:click='shuffle'>シャッフル</button>
+        <transition-group name='subject-list' tag='ul'><!-- transiton-group の際はtagでタグを表現し、閉じタグだけでオーケー -->
+            <!-- 配列回す -->
+            <li v-for='subject in subjects' v-bind:key='subject.message'>
+                {{subject.message}}
+            </li>
+        </transition-group>        
+        </ul>
+    </div>
+    
+    <!-- vueの読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <!-- lodashの読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js"></script>
+    
+    <script>
+
+        //インスタンス作成
+        new Vue({
+            //id指定
+            el: '#app',
+            //使う値
+            data: {
+                subjects: [
+                { message: 'english' },
+                { message: 'science' },
+                { message: 'programing' },
+                { message: 'japanese' },
+                ]
+            },
+            //関数定義
+            methods: {
+                shuffle: function(){
+                    //thisでオブジェクトのデータを呼び出している 
+                    this.subjects = _.shuffle(this.subjects);//ライブラリ使う際の記述方法
+                }
+            }
+        })
+        
+    </script>
+
+</body>
+</html>
